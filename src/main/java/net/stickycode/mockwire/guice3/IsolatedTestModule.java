@@ -12,86 +12,21 @@
  */
 package net.stickycode.mockwire.guice3;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
-import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 
 public class IsolatedTestModule
     extends AbstractModule {
 
-  private final class InstanceProvider
-      implements Provider {
-
-    private final BeanHolder b;
-
-    private InstanceProvider(BeanHolder b) {
-      this.b = b;
-    }
-
-    @Override
-    public Object get() {
-      return b.getInstance();
-    }
-  }
-
-  private Logger log = LoggerFactory.getLogger(getClass());
-
-  private final IsolatedTestModuleMetadata manifest;
-
   private final Class<?> testClass;
 
-  public IsolatedTestModule(Class<?> testClass, IsolatedTestModuleMetadata manifest) {
-    this.manifest = manifest;
+  public IsolatedTestModule(Class<?> testClass) {
     this.testClass = testClass;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   protected void configure() {
     bindListener(Matchers.any(), new TestTypeListener(testClass));
-
-    for (final BeanHolder b : manifest.getBeans()) {
-      TypeLiteral type = TypeLiteral.get(b.getType());
-      log.debug("binding type '{}' to instance '{}'", type, b.getInstance());
-      bind(type).toProvider(new InstanceProvider(b));
-    }
-    for (Class type : manifest.getTypes()) {
-      log.debug("binding type '{}'", type);
-      bind(type).in(Singleton.class);
-      bindInterfaces(type, type.getInterfaces());
-      bindSuperType(type, type.getSuperclass());
-    }
-
-    for (Module module : manifest.getModules()) {
-      log.debug("installing module '{}'", module);
-      install(module);
-    }
-  }
-
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  private void bindSuperType(Class type, Class superClass) {
-    if (superClass != null && !superClass.equals(Object.class)) {
-      bind(superClass).to(type).in(Singleton.class);
-      bindInterfaces(type, superClass.getInterfaces());
-      bindSuperType(type, superClass.getSuperclass());
-    }
-  }
-
-  /**
-   * Recurse and bind all the interfaces implemented by the given type.
-   */
-  @SuppressWarnings({ "rawtypes", "unchecked" })
-  private void bindInterfaces(Class type, Class[] interfaces) {
-    for (Class implemented : interfaces) {
-      bind(implemented).to(type).in(Singleton.class);
-      bindInterfaces(type, implemented.getInterfaces());
-    }
   }
 
 }

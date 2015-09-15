@@ -12,21 +12,23 @@
  */
 package net.stickycode.mockwire.guice3;
 
-import net.stickycode.mockwire.MockwireTck;
-import net.stickycode.mockwire.MockwireTestKit;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import net.stickycode.mockwire.MockwireTck;
+import net.stickycode.mockwire.MockwireTestKit;
+
 @RunWith(Suite.class)
-@SuiteClasses({ MockwireTck.class,
-    MockwireTestKit.class })
+@SuiteClasses({
+    MockwireTck.class,
+    MockwireTestKit.class
+})
 public class MockwireTckTest {
 
   /**
    * This is an anchor for Infinitest to rerun this suite if its changes
    */
-  GuiceIsolatedTestManifest anchor;
+  Guice3MockwireFrameworkBridge anchor;
 
 }

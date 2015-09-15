@@ -1,6 +1,6 @@
 package net.stickycode.mockwire.guice3.provider;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.inject.Inject;
 
