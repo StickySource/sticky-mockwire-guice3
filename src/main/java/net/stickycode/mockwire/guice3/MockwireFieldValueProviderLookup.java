@@ -24,14 +24,14 @@ import net.stickycode.mockwire.UnderTest;
 import net.stickycode.reflector.AnnotatedFieldProcessor;
 import net.stickycode.reflector.ValueSource;
 
-public class MethodFactoryDependencies
+public class MockwireFieldValueProviderLookup
     extends AnnotatedFieldProcessor
     implements ValueSource {
 
   private final Map<Class<?>, Provider<?>> providers = new HashMap<Class<?>, Provider<?>>();
   private final TypeEncounter<?> encounter;
 
-  public MethodFactoryDependencies(TypeEncounter<?> encounter) {
+  public MockwireFieldValueProviderLookup(TypeEncounter<?> encounter) {
     super(UnderTest.class, Controlled.class);
     assert encounter != null;
     this.encounter = encounter;

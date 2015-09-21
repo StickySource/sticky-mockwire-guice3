@@ -35,7 +35,7 @@ public class TestTypeListener
   public <I> void hear(TypeLiteral<I> type, final TypeEncounter<I> encounter) {
     Class<? super I> rawType = type.getRawType();
     if (rawType.equals(testType)) {
-      final MethodFactoryDependencies valueCollector = new MethodFactoryDependencies(encounter);
+      final MockwireFieldValueProviderLookup valueCollector = new MockwireFieldValueProviderLookup(encounter);
       new Reflector()
           .forEachField(valueCollector)
           .process(rawType);

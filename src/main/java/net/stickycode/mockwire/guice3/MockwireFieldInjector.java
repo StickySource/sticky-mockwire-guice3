@@ -20,9 +20,9 @@ import com.google.inject.MembersInjector;
 public class MockwireFieldInjector
     implements MembersInjector<Object> {
 
-  private final MethodFactoryDependencies valueCollector;
+  private final MockwireFieldValueProviderLookup valueCollector;
 
-  public MockwireFieldInjector(MethodFactoryDependencies valueCollector) {
+  public MockwireFieldInjector(MockwireFieldValueProviderLookup valueCollector) {
     this.valueCollector = valueCollector;
   }
 
