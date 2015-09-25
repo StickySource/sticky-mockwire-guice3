@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>net.stickycode.configured</groupId>
 			<artifactId>sticky-configured-guice3</artifactId>
-			<version>[4.3,5)</version>
+			<version>[4,5)</version>
 		</dependency>
 
 	</dependencies>
